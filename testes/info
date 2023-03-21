@@ -1,0 +1,5 @@
+g++ -o aula aula.cpp && ./aula -> compila e executa
+g++ -std=c++11 -o initializer initializer.cpp && ./initializer -> versao da compilacao
+
+* -> endereco
+& -> referencia
