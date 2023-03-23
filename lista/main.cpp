@@ -14,23 +14,23 @@ int main() {
     while (op_tipo = checkOpcao(menuTipo()), op_tipo != Tipos::SAIR) {
         if (op_tipo == Tipos::STRING) {
             Seletor<string> sel(tp);
-            sel.leitura();
+            sel.leituraOpcoes();
         } else  if (op_tipo == Tipos::INT) {
             Seletor<int> sel(tp);
-            sel.leitura();
+            sel.leituraOpcoes();
         } else  if (op_tipo == Tipos::DOUBLE) {
             Seletor<double> sel(tp);
-            sel.leitura();
+            sel.leituraOpcoes();
         } else  if (op_tipo == Tipos::FLOAT) {
             Seletor<float> sel(tp);
-            sel.leitura();
+            sel.leituraOpcoes();
         } else  if (op_tipo == Tipos::BOOL) {
             Seletor<bool> sel(tp);
-            sel.leitura();
+            sel.leituraOpcoes();
 
         } else  if (op_tipo == Tipos::CHAR) {
             Seletor<char> sel(tp);
-            sel.leitura();
+            sel.leituraOpcoes();
         } else  if (op_tipo == Tipos::NONE) {
             cout << "Opcao invalida" << endl;
         }

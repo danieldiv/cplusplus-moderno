@@ -17,8 +17,9 @@ public:
     Seletor(string tipo):tipo_(tipo) { }
 
     void leituraOpcoes();
-    void leituraEntrada();
+    T leituraEntrada();
     int menuOpcao();
+    int menuLeitura();
 
     string getTipo() { return tipo_; }
 };
@@ -29,29 +30,57 @@ void Seletor<T>::leituraOpcoes() {
 
     while (op = menuOpcao(), op != 0) {
         if (op == 1) {
+            int tipoInsercao = menuLeitura();
 
+            if (tipoInsercao == 1) {
+                lista_.insert(leituraEntrada());
+            } else if (tipoInsercao == 2) {
+                lista_.push_back(leituraEntrada());
+            } else if (tipoInsercao == 3) {
+                size_t pos;
+
+                cout << "Informe a posicao: ";
+                cin >> pos;
+
+                lista_.insert(pos, leituraEntrada());
+            }
         } else if (op == 2) {
-            size_t pos;
+            if (lista_.isEmpity()) {
+                cout << "Lista vazia" << endl;
+            } else {
+                size_t pos;
 
-            cout << "Informe a posicao para remover: ";
-            cin >> pos;
+                lista_.imprime();
+                cout << endl;
 
-            try {
-                lista_.remover(pos);
-            } catch (std::string &res) {
-                cout << res << endl;
+                cout << "Informe a posicao para remover: ";
+                cin >> pos;
+
+                try {
+                    cout << endl;
+                    lista_.remover(pos);
+                } catch (std::string &res) {
+                    cout << res << endl;
+                }
             }
         } else if (op == 3) {
-            size_t pos;
+            if (lista_.isEmpity()) {
+                cout << "Lista vazia" << endl;
+            } else {
+                size_t pos;
 
-            cout << "Informe a posicao para buscar: ";
-            cin >> pos;
+                cout << "Informe a posicao para buscar: ";
+                cin >> pos;
 
-            try {
-                cout << lista_.buscar(pos);
-            } catch (std::string &res) {
-                cout << res << endl;
+                try {
+                    cout << lista_.buscar(pos) << endl;
+                } catch (std::string &res) {
+                    cout << res << endl;
+                }
             }
+        } else if (op == 4) {
+            lista_.imprime();
+            lista_.imprimeReverse();
         } else {
             cout << "Opcao invalida" << endl;
         }
@@ -60,27 +89,25 @@ void Seletor<T>::leituraOpcoes() {
 }
 
 template<typename T>
-void Seletor<T>::leituraEntrada() {
+T Seletor<T>::leituraEntrada() {
+    T val;
 
+    cout << "Informe o valor para inserir: ";
+
+    cin >> val;
+    return val;
 }
 
 template<>
-void Seletor<std::string>::leituraEntrada() {
+string Seletor<std::string>::leituraEntrada() {
+    string val;
+    cin.ignore();
 
+    cout << "Informe o valor para inserir: ";
+
+    getline(cin, val);
+    return val;
 }
-
-// template<>
-// void Seletor<string>::leituraOpcoes() {
-//     int op;
-
-//     while (op = menuOpcao(), op != 0) {
-//         system("read -p \"\nPressione enter para continuar...\" continue");
-//     }
-//     // string str;
-
-//     // cin.ignore();
-//     // getline(cin, str);
-// }
 
 template<typename T>
 int Seletor<T>::menuOpcao() {
@@ -95,12 +122,28 @@ int Seletor<T>::menuOpcao() {
     cout << "[1] Inserir" << endl;
     cout << "[2] Remover" << endl;
     cout << "[3] Buscar" << endl;
+    cout << "[4] Imprimir" << endl;
     cout << "\n[0] Voltar" << endl;
 
     cout << "\nEscolha uma opcao: ";
     cin >> op;
 
     return op;
+}
+
+template<typename T>
+int Seletor<T>::menuLeitura() {
+    cout << endl;
+    cout << "[1] Inicio" << endl;
+    cout << "[2] Fim" << endl;
+    cout << "[3] Escolher local" << endl << endl;
+
+    cout << "Escolha onde deseja inserir: ";
+
+    int tipoInsercao;
+    cin >> tipoInsercao;
+
+    return tipoInsercao;
 }
 
 #endif
