@@ -90,21 +90,19 @@ void Seletor<T>::leituraOpcoes() {
 
 template<typename T>
 T Seletor<T>::leituraEntrada() {
-    T val;
-
     cout << "Informe o valor para inserir: ";
 
+    T val;
     cin >> val;
     return val;
 }
 
 template<>
 string Seletor<std::string>::leituraEntrada() {
-    string val;
-    cin.ignore();
-
     cout << "Informe o valor para inserir: ";
 
+    string val;
+    cin.ignore();
     getline(cin, val);
     return val;
 }
