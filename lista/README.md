@@ -11,7 +11,7 @@
 # Funcionamento
 
 <p align = "">
-    <img src="https://github.com/danieldiv/cplusplus-moderno/blob/main/lista/img/menu.png" alt="menu" width="300"></img>
+    <img src="https://github.com/danieldiv/cplusplus-moderno/blob/main/lista/img/menu.png" alt="menu" width="200"></img>
 </p>
 
 
