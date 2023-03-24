@@ -1,6 +1,6 @@
 #include "seletor.hpp"
 
-enum class Tipos { STRING, INT, DOUBLE, FLOAT, BOOL, CHAR, SAIR, NONE };
+enum Tipos { STRING, INT, DOUBLE, FLOAT, BOOL, CHAR, SAIR, NONE };
 
 string tp;
 
@@ -11,27 +11,27 @@ Tipos checkOpcao(int op);
 int main() {
     Tipos op_tipo;
 
-    while (op_tipo = checkOpcao(menuTipo()), op_tipo != Tipos::SAIR) {
-        if (op_tipo == Tipos::STRING) {
+    while (op_tipo = checkOpcao(menuTipo()), op_tipo != SAIR) {
+        if (op_tipo == STRING) {
             Seletor<string> sel(tp);
             sel.leituraOpcoes();
-        } else  if (op_tipo == Tipos::INT) {
+        } else  if (op_tipo == INT) {
             Seletor<int> sel(tp);
             sel.leituraOpcoes();
-        } else  if (op_tipo == Tipos::DOUBLE) {
+        } else  if (op_tipo == DOUBLE) {
             Seletor<double> sel(tp);
             sel.leituraOpcoes();
-        } else  if (op_tipo == Tipos::FLOAT) {
+        } else  if (op_tipo == FLOAT) {
             Seletor<float> sel(tp);
             sel.leituraOpcoes();
-        } else  if (op_tipo == Tipos::BOOL) {
+        } else  if (op_tipo == BOOL) {
             Seletor<bool> sel(tp);
             sel.leituraOpcoes();
 
-        } else  if (op_tipo == Tipos::CHAR) {
+        } else  if (op_tipo == CHAR) {
             Seletor<char> sel(tp);
             sel.leituraOpcoes();
-        } else  if (op_tipo == Tipos::NONE) {
+        } else  if (op_tipo == NONE) {
             cout << "Opcao invalida" << endl;
         }
         system("read -p \"\nPressione enter para continuar...\" continue");
@@ -63,13 +63,13 @@ int menuTipo() {
 
 Tipos checkOpcao(int op) {
     switch (op) {
-    case 0: return Tipos::SAIR;
-    case 1: tp.assign("STRING"); return Tipos::STRING;
-    case 2: tp.assign("INT"); return Tipos::INT;
-    case 3: tp.assign("DOUBLE"); return Tipos::DOUBLE;
-    case 4: tp.assign("FLOAT"); return Tipos::FLOAT;
-    case 5: tp.assign("BOOL"); return Tipos::BOOL;
-    case 6: tp.assign("CHAR"); return Tipos::CHAR;
-    default: return Tipos::NONE;
+    case 0: return SAIR;
+    case 1: tp.assign("STRING"); return STRING;
+    case 2: tp.assign("INT"); return INT;
+    case 3: tp.assign("DOUBLE"); return DOUBLE;
+    case 4: tp.assign("FLOAT"); return FLOAT;
+    case 5: tp.assign("BOOL"); return BOOL;
+    case 6: tp.assign("CHAR"); return CHAR;
+    default: return NONE;
     }
 }
