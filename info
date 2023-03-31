@@ -1,0 +1,16 @@
+g++ -o aula aula.cpp && ./aula -> compila e executa
+g++ -std=c++11 -o initializer initializer.cpp && ./initializer -> versao da compilacao
+
+* -> endereco
+& -> referencia
+
+inserir
+remover
+buscar
+
+./copiar cefet cpp acordar com cafe -> passa informacoes para argc(tamanho) e argv(vetor string)
+argc = 6, argv = ./copiar cefet cpp acordar com cafe
+
+kill -s SIGTERM 28338 -> captura o sinal
+ctrl c -> SIGINT
+fechar no segundo ctrl c

@@ -14,6 +14,6 @@
     <img src="https://github.com/danieldiv/cplusplus-moderno/blob/main/lista/img/menu.png" alt="menu" width="200"></img>
 </p>
 
-
-
 - Ao executar o programa tera a opção de escolher entre 6 tipos de entrada
+
+- Apos escolher a entreda, devera escolher o que fazer: (adicionar, remover ou buscar)
