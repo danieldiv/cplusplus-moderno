@@ -14,3 +14,7 @@ argc = 6, argv = ./copiar cefet cpp acordar com cafe
 kill -s SIGTERM 28338 -> captura o sinal
 ctrl c -> SIGINT
 fechar no segundo ctrl c
+
+const no retorno da funcao nao permite alterar o objeto
+
+viviane lizard - treinamento c++
