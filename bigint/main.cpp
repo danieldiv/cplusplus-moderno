@@ -1,15 +1,18 @@
 #include "bigint.hpp"
-#include <bitset>
 
 int main() {
-    BigInt a("100");
-    BigInt b("21");
+    BigInt a("153");
+    BigInt b("125");
+    BigInt novo("1");
 
-    // BigInt c = a + b;
-    // cout << "+\n" << c.getVal() << endl << endl;
+    BigInt c = a + b + novo;
+    cout << "[+] = " << c.getVal() << endl;
 
-    BigInt d = a - b;
-    cout << "-\n" << d.getVal() << endl;
+    // BigInt d = a - b;
+    // cout << "[-] = " << d.getVal() << endl;
+
+    BigInt f = a * b;
+    cout << "[*] = " << f.getVal() << endl;
 
     return 0;
 }

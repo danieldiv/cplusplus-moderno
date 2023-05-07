@@ -5,13 +5,7 @@ BigInt::BigInt(const BigInt &obj) {
     init();
 }
 
-void BigInt::init() {
-    for (const auto &c : val_)
-        vec_.push_back(c - '0');
-    // for (const auto &c : vec_)
-    //     cout << c << " ";
-    // cout << endl;
-}
+void BigInt::init() { for (const auto &c : val_) vec_.push_back(c - '0'); }
 
 void BigInt::printVal(const string &v1, const string &v2) {
     std::stringstream ss;
@@ -43,27 +37,43 @@ BigInt BigInt::operator-(const BigInt &obj) {
     return (BigInt(res));
 }
 
+BigInt BigInt::operator*(const BigInt &obj) {
+    string res("");
+
+    if (obj.val_.size() >= getVal().size())
+        mult(obj.vec_, getVec(), res);
+    else
+        mult(getVec(), obj.vec_, res);
+    return (BigInt(res));
+}
+
+// trabalhar com vector
 void BigInt::soma(const string &v1, const string &v2, string &res) {
-    printVal(v1, v2);
     auto it_v2 = v2.rbegin();
     int aux = 0;
 
     for (auto it = v1.rbegin(); it != v1.rend(); it++) {
+        int val = 0;
         if (it_v2 != v2.rend()) {
-            auto val = (*it - '0') + (*it_v2 - '0');
-            insertValor(val, aux, res);
+            val = (*it - '0') + (*it_v2 - '0');
             it_v2++;
         } else {
-            auto val = *it - '0';
-            insertValor(val, aux, res);
+            val = *it - '0';
+        }
+        val += aux;
+        if (val >= 10) {
+            res.insert(0, to_string(val - 10));
+            aux = 1;
+        } else {
+            res.insert(0, to_string(val));
+            aux = 0;
         }
     }
     if (aux == 1) res.insert(0, to_string(1));
 }
 
+// precisa de correcoes
 void BigInt::sub(const vector<int> &v1, const vector<int> &v2, string &res) {
-    printVal(transformVal(v1), transformVal(v2));
-
     vector<int> v1_aux;
     vector<int> v2_aux;
 
@@ -105,19 +115,42 @@ void BigInt::sub(const vector<int> &v1, const vector<int> &v2, string &res) {
     }
 }
 
-void BigInt::insertValor(int &val, int &aux, string &res) {
-    val += aux;
-    if (val >= 10) {
-        res.insert(0, to_string(val - 10));
-        aux = 1;
-    } else {
-        res.insert(0, to_string(val));
-        aux = 0;
-    }
-}
+void BigInt::mult(const vector<int> &v1, const vector<int> &v2, string &res) {
+    auto it_v2 = v2.rbegin();
+    int aux = 0;
+    int cont = 0;
 
-string BigInt::transformVal(const vector<int> &vec) {
-    string res("");
-    for (const auto &c : vec) res.append(to_string(c));
-    return res;
+    vector<string> temp;
+
+    while (it_v2 != v2.rend()) {
+        for (auto it = v1.rbegin(); it != v1.rend(); it++) {
+            auto val = (*it) * (*it_v2);
+            val += aux;
+            aux = 0;
+
+            if (val >= 10 && it != v1.rend() - 1) {
+                while (val >= 10) {
+                    aux += 1;
+                    val -= 10;
+                }
+            }
+            res.insert(0, to_string(val));
+        }
+        if (cont > 0) {
+            const string zeros(cont, '0');
+            res.append(zeros);
+        }
+        cont++;
+        temp.push_back(res);
+        res.clear();
+        it_v2++;
+    }
+
+    BigInt res_temp("0");
+    for (auto it = temp.rbegin(); it != temp.rend(); it++) {
+        BigInt val_temp(*it);
+        BigInt soma_temp = val_temp + res_temp;
+        res_temp = soma_temp.getVal();
+    }
+    res = res_temp.getVal();
 }
