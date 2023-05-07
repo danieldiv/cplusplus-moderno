@@ -1,0 +1,63 @@
+Q3
+
+auto adiciona o tipo dependendo do valor de entrada
+ja o decltype define o tipo atravez de um tipo já definido, podendo ser variavel ou valor
+
+Q4
+
+eh a sequencia que o programa ira percorrer
+
+int a = 10
+int b = a + 2
+int multiplica = b * 3
+cout << multiplica << endl
+
+inicialmente eu declaro a variavel 10, em seguida a variavel b depende do que foi iniciado em a,
+multiplica precisa do valor obtido em b e para imprimir a multiplicacao eh necessario que 
+multiplica esteja declarada.a
+
+Q5
+
+pq ele apenas precisa saber qual tipo inicializar, que diferente do auto, precisa inicializar a 
+variavel para pegar o tipo, no decltype eh passado o tipo para ele
+
+auto a = 10 -> tipo eh inteiro
+
+decltype(int) b -> tipo inteiro
+decltype(a) c -> tipo inteiro
+decltype("20") d -> tipo string
+
+Q6
+
+decltype(auto) eh utilizado para retornos de funcoes que nao se sabe o tipo,
+ou seja, utiliza o auto para pegar o tipo e decltype para o tipo do retorno da funcao,
+portanto, o auto pode pegar a referencia para o retorno
+
+template<typename T>
+decltype(auto) menorDistancia(T &roteiros) {
+	auto it = roteiros.begin()->second;
+	return it;
+}
+
+o tipo T eh passado na chamada da funcao, por exemplo, map<string, vector<pair<double, double>>>
+a variavel it sera do tipo de iterator do tipo T->second, que eh vector<pair<double, double>>
+e retorno da funcao eh o mesmo do iterator
+
+caso o iterator pegasse um vector<pair<double, int>>, seria necessario ter uma outra funcao
+com um tipo de retorno diferente
+
+mas ao se utilizar decltype(auto), sera pegado a referencia para o tipo it criado
+
+Q7
+
+o auto no C++98/03 era utilizado para inicializar variaveis com declaracoes explicitas
+ou seja, caso eu queira iniacilizar um variavel do tipo inteiro, podia se utilizar o auto
+
+int main() {
+	auto int var = 10 + 5;
+	return 0;
+}
+
+no exemplo acima a variavel var do tipo inteiro iria inicializar com o valor 15
+porem, quando nao se colocava a palavra chave auto, ele era colocada automaticamente
+entao o auto foi utilizado para inferir tipo a partir do C++11.
