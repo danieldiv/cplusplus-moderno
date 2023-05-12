@@ -1,5 +1,6 @@
-#include "bigint.hpp"
+#include "include/bigint.hpp"
 
+// tratar para pegar o modulo
 BigInt::BigInt(const BigInt &obj) {
     this->val_ = obj.val_;
     init();
@@ -29,7 +30,29 @@ BigInt BigInt::operator+(const BigInt &obj) {
 BigInt BigInt::operator-(const BigInt &obj) {
     string res("");
 
-    if (obj.val_.size() >= getVal().size()) {
+    // cout << "A: " << this->val_ << endl;
+    // cout << "B: " << obj.val_ << endl;
+
+    if (obj.val_.size() == getVal().size()) {
+        if (this->val_.compare(obj.val_) == 0) return (BigInt("0"));
+        if (obj.vec_.size() == 1)
+            return (BigInt(to_string(this->vec_[0] - obj.vec_[0])));
+
+        auto it_obj = obj.vec_.begin();
+        it_obj++;
+        for (size_t i = 0; i < this->vec_.size(); i++) {
+            if (this->vec_[i] == obj.vec_[i]) continue;
+            else if (this->vec_[i] > obj.vec_[i]) {
+                sub(getVec(), obj.vec_, res);
+                break;
+            } else {
+                sub(obj.vec_, getVec(), res);
+                res.insert(0, "-");
+                break;
+            }
+            it_obj++;
+        }
+    } else if (obj.val_.size() > getVal().size()) {
         sub(obj.vec_, getVec(), res);
         res.insert(0, "-");
     } else
@@ -44,6 +67,13 @@ BigInt BigInt::operator*(const BigInt &obj) {
         mult(obj.vec_, getVec(), res);
     else
         mult(getVec(), obj.vec_, res);
+    return (BigInt(res));
+}
+
+BigInt BigInt::operator/(const BigInt &obj) {
+    string res("");
+
+    div(getVal(), obj.val_, res);
     return (BigInt(res));
 }
 
@@ -80,12 +110,20 @@ void BigInt::sub(const vector<int> &v1, const vector<int> &v2, string &res) {
     v1_aux.insert(v1_aux.begin(), v1.begin(), v1.end());
     v2_aux.insert(v2_aux.begin(), v2.begin(), v2.end());
 
+    // for (const auto &v : v1_aux) cout << v << " ";
+    // cout << endl;
+    // for (const auto &v : v2_aux) cout << v << " ";
+    // cout << endl;
+    // cout << endl;
+
     auto it_v2 = v2_aux.rbegin();
+    auto val = 0;
 
     for (auto it = v1_aux.rbegin(); it != v1_aux.rend(); it++) {
         if (it_v2 != v2_aux.rend()) {
-            auto val = *it - *it_v2;
+            val = *it - *it_v2;
             it_v2++;
+
 
             if (val < 0) {
                 auto it_aux = it + 1;
@@ -103,12 +141,12 @@ void BigInt::sub(const vector<int> &v1, const vector<int> &v2, string &res) {
                 }
                 val += 10;
             }
-            res.insert(0, to_string(val));
-        } else {
-            auto val = *it;
-            res.insert(0, to_string(val));
-        }
+        } else
+            val = *it;
+        // cout << val << " ";
+        res.insert(0, to_string(val));
     }
+    // cout << endl;
     for (auto &c : res) {
         if (c != '0') return;
         res.erase(0, 1);
@@ -150,7 +188,53 @@ void BigInt::mult(const vector<int> &v1, const vector<int> &v2, string &res) {
     for (auto it = temp.rbegin(); it != temp.rend(); it++) {
         BigInt val_temp(*it);
         BigInt soma_temp = val_temp + res_temp;
-        res_temp = soma_temp.getVal();
+        res_temp.val_ = soma_temp.val_;
     }
     res = res_temp.getVal();
+}
+
+// v2 deve ser <= 2^64-1
+void BigInt::div(const string &v1, const string &v2, string &res) {
+
+    if (v2.size() > 20) {
+        cout << "tamanho do divisor invalido" << endl;
+        return;
+    }
+    string copia = v1;
+    unsigned long long int dividendo = 0;
+    const unsigned long long int divisor = stoull(v2);
+
+    int controle = 0;
+
+    while (!copia.empty()) {
+        dividendo = stoull(copia.substr(0, v2.size()));
+        if (dividendo < divisor) {
+            while (dividendo < divisor) {
+                if (copia.size() > v2.size()) {
+                    dividendo = stoull(copia.substr(0, v2.size() + 1));
+                    copia.erase(0, v2.size() + 1);
+                } else {
+                    if (controle == 0) {
+                        if (res.size() == 0) res.append("0");
+                        res.append(",");
+                    } else {
+                        copia.append("0");
+                        if (controle == (CASA_DECIMAL)) break;
+                        else if (copia.size() < v2.size())
+                            res.append("0");
+                        else if (stoull(copia.substr(0, v2.size() + 1)) < divisor)
+                            res.append("0");
+                    }
+                    controle++;
+                }
+            }
+        } else
+            copia.erase(0, v2.size());
+
+        res.append(to_string(dividendo / divisor));
+        dividendo = dividendo % divisor;
+
+        if (dividendo != 0) copia.insert(0, to_string(dividendo));
+        if (controle == CASA_DECIMAL) break;
+    }
 }
