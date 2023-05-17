@@ -1,0 +1,16 @@
+TARGET = programa
+CXX = g++
+CXXFLAGS := -Wall -Wextra -Werror
+LDFLAGS  := -lstdc++ -lm -std=c++03
+SOURCE = main.cpp
+
+all: $(TARGET)
+
+$(TARGET): $(SOURCE)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(SOURCE) $(LDFLAGS)
+
+clean:
+	rm -f $(TARGET)
+
+run:
+	./$(TARGET)
