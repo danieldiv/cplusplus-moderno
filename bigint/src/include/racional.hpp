@@ -51,15 +51,18 @@ public:
     bool operator==(const Racional &racional);
 
     // aritmeticos
-    Racional operator+(const Racional &racional);
-    Racional operator-(const Racional &racional);
-    Racional operator*(const Racional &racional);
-    Racional operator/(const Racional &racional);
+    const Racional operator+(const Racional &racional);
+    const Racional operator-(const Racional &racional);
+    const Racional operator*(const Racional &racional);
+    const Racional operator/(const Racional &racional);
     Racional operator+=(const Racional &racional);
     Racional operator-=(const Racional &racional);
     Racional operator*=(const Racional &racional);
     Racional operator/=(const Racional &racional);
     Racional operator++();
+    Racional operator++(int);
+    Racional operator--();
+    Racional operator--(int);
     Racional operator-();
 
     const int &getNumerador() { return numerador_; }
@@ -68,13 +71,14 @@ public:
     void setNumerador(int numerador) { this->numerador_ = numerador; }
     void setDenominador(int denominador) { this->denominador_ = denominador; }
 
-    const double valor() { return (double)numerador_ / denominador_; }
-    const std::string &getTipo() { return tipo_; }
+    double valor() { return (double)numerador_ / denominador_; }
+    std::string &getTipo() { return tipo_; }
 
     int mdc(int a, int b);
+    int mmc(int a, int b);
 
     void simplificar();
-    void imprimir(int n);
+    void imprimir(const std::string &n);
 };
 
 #endif
